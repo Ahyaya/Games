@@ -45,13 +45,13 @@ wget https://github.com/Ahyaya/publicTest/blob/master/dedicated_server_mods_setu
 #When finished, you may choose a way to start the server
 #===============================================================================================
 #Option-1 utilize the backstage command
-cd ~/DST_server/bin
-run_shared=(./dontstarve_dedicated_server_nullrenderer)
-run_shared+=(-console)
-run_shared+=(-cluster Cluster_1)
-run_shared+=(-monitor_parent_process $$)
-"${run_shared[@]}" -shard Caves  | sed 's/^/Caves:  /' &
-"${run_shared[@]}" -shard Master | sed 's/^/Master: /'
+#cd ~/DST_server/bin
+#run_shared=(./dontstarve_dedicated_server_nullrenderer)
+#run_shared+=(-console)
+#run_shared+=(-cluster Cluster_1)
+#run_shared+=(-monitor_parent_process $$)
+#"${run_shared[@]}" -shard Caves  | sed 's/^/Caves:  /' &
+#"${run_shared[@]}" -shard Master | sed 's/^/Master: /'
 #-----------------------------------------------------------------------------------------------
 #Option-2 use screen command to open 2 shell separately,
 #shell 1: 
