@@ -12,3 +12,9 @@
   cd ~/.ssh && ssh-keygen -t rsa -f $Key_Name
   
   ssh-copy-id -i "${Key_Name}.pub"  "root@${Host_ip}"
+
+  ### Bad local key-gen could be dealt with
+  
+  usr_Name=$(whoami)
+  
+  ssh-keygen -f "/home/${usr_Name}/.ssh/known_hosts" -R ${Host_ip}
