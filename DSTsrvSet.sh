@@ -9,6 +9,8 @@ sudo apt-get install libstdc++6:i386 libgcc1:i386 libcurl4-gnutls-dev:i386
 #ln -s /usr/lib/libcurl.so.4 /usr/lib/libcurl-gnutls.so.4
 #===============================================================================================
 
+
+
 #Install steamCMD
 #===============================================================================================
 mkdir ~/steamcmd
@@ -16,6 +18,8 @@ cd ~/steamcmd
 wget https://steamcdn-a.akamaihd.net/client/installer/steamcmd_linux.tar.gz
 tar -xvzf steamcmd_linux.tar.gz
 #===============================================================================================
+
+
 
 #With steamcmd installed, use the following command to install DSTsrv
 #===============================================================================================
@@ -27,12 +31,16 @@ wget https://github.com/Ahyaya/publicTest/blob/master/Cluster_1.zip
 unzip -o Cluster_1.zip
 #===============================================================================================
 
+
+
 #Setup mods
 #===============================================================================================
 cd ~/DST_server/mods
 rm -f dedicated_server_mods_setup.lua
 wget https://github.com/Ahyaya/publicTest/blob/master/dedicated_server_mods_setup.lua
 #===============================================================================================
+
+
 
 #When finished, you may choose a way to start the server
 #===============================================================================================
