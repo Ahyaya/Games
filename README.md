@@ -3,9 +3,9 @@
 
 ## Deploy SSH keygen
 
-  Key_Name=<choose a file name>
+  Key_Name=[choose a file name]
   
-  Host_ip=<server ip>
+  Host_ip=[server ip]
   
   cd ~/.ssh && ssh-keygen -t rsa -f $Key_Name
   
