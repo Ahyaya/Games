@@ -22,6 +22,7 @@ tar -xvzf steamcmd_linux.tar.gz
 ./steamcmd.sh +login anonymous +force_install_dir ~/DST_server +app_update 343050 validate +quit
 #Download the save and cfg files from github or manually upload
 cd ~/.klei/DoNotStarveTogether
+rm -rf Cluster*
 wget https://github.com/Ahyaya/publicTest/blob/master/Cluster_1.zip
 unzip -o Cluster_1.zip
 #===============================================================================================
