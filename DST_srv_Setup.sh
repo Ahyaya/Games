@@ -40,7 +40,8 @@ rm -f dedicated_server_mods_setup.lua
 wget https://github.com/Ahyaya/publicTest/blob/master/dedicated_server_mods_setup.lua
 #===============================================================================================
 
-
+cd ~
+echo -e "All necessary files for Don't Starve Together server deployed!\n\nYou may try ./DST_srv_Launcher.sh to launch it."
 
 #When finished, you may choose a way to start the server
 #===============================================================================================
