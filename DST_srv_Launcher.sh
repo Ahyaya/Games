@@ -11,3 +11,4 @@ echo "=============================================================="
 echo -e "Two screen sessions are activated, use command:\n\t'screen -r -S DST_srv_Master'\nand\n\t'screen -r -S DST_srv_Caves'\nto rettach the sessions"
 echo "=============================================================="
 
+cd ~
