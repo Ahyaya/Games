@@ -32,7 +32,8 @@ wget https://github.com/Ahyaya/publicTest/raw/master/Cluster_1.zip
 unzip -o Cluster_1.zip
 #===============================================================================================
 
-
+mkdir ~/backup
+cp ~/.klei/DoNotStarveTogether/Cluster_1.zip ./
 
 #Setup mods
 #===============================================================================================
