@@ -35,9 +35,10 @@ unzip -o Cluster_1.zip
 
 #Setup mods
 #===============================================================================================
-cd ~/DST_server/mods
-rm -f dedicated_server_mods_setup.lua
-wget https://github.com/Ahyaya/publicTest/blob/master/dedicated_server_mods_setup.lua
+cd ~/DST_server
+rm -rf mods
+wget https://github.com/Ahyaya/publicTest/blob/master/mods.zip
+unzip -o mods.zip
 #===============================================================================================
 
 cd ~
