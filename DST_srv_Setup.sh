@@ -25,8 +25,11 @@ tar -xvzf steamcmd_linux.tar.gz
 #===============================================================================================
 ./steamcmd.sh +login anonymous +force_install_dir ~/DST_server +app_update 343050 validate +quit
 #Download the save and cfg files from github or manually upload
+mkdir ~/.klei
+mkdir ~/.klei/DoNotStarveTogether
+mkdir ~/.klei/Agreements
+mkdir ~/.klei/Agreements/DoNotStarveTogether
 cd ~/.klei/DoNotStarveTogether
-rm -rf Cluster*
 wget https://github.com/Ahyaya/publicTest/raw/master/Cluster_1.zip
 unzip -o Cluster_1.zip
 #===============================================================================================
@@ -35,7 +38,7 @@ unzip -o Cluster_1.zip
 
 #Setup mods
 #===============================================================================================
-echo -e 'ServerModSetup("1378549454")\nServerModSetup("356398534"\nServerModSetup("362175979")\nServerModSetup("374550642")\nServerModSetup("375850593")\nServerModSetup("378160973")\nServerModSetup("382177939")\nServerModSetup("458940297")\nServerModSetup("466732225")
+echo -e 'ServerModSetup("1378549454")\nServerModSetup("356398534")\nServerModSetup("362175979")\nServerModSetup("374550642")\nServerModSetup("375850593")\nServerModSetup("378160973")\nServerModSetup("382177939")\nServerModSetup("458940297")\nServerModSetup("466732225")
 ServerModSetup("666155465")\nServerModSetup("672208231")\nServerModSetup("721491336")\nServerModSetup("758532836")\nServerModSetup("770901818")\nServerModSetup("818739975")\nServerModSetup("972139614")' >> ~/DST_server/mods/dedicated_server_mods_setup.lua
 #===============================================================================================
 
