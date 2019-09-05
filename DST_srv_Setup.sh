@@ -27,7 +27,7 @@ tar -xvzf steamcmd_linux.tar.gz
 #Download the save and cfg files from github or manually upload
 cd ~/.klei/DoNotStarveTogether
 rm -rf Cluster*
-wget https://github.com/Ahyaya/publicTest/blob/master/Cluster_1.zip
+wget https://github.com/Ahyaya/publicTest/raw/master/Cluster_1.zip
 unzip -o Cluster_1.zip
 #===============================================================================================
 
