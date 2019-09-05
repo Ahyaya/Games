@@ -35,10 +35,8 @@ unzip -o Cluster_1.zip
 
 #Setup mods
 #===============================================================================================
-cd ~/DST_server
-rm -rf mods
-wget https://github.com/Ahyaya/publicTest/blob/master/mods.zip
-unzip -o mods.zip
+echo -e "ServerModSetup("1378549454")\nServerModSetup("356398534"\nServerModSetup("362175979")\nServerModSetup("374550642")\nServerModSetup("375850593")\nServerModSetup("378160973")\nServerModSetup("382177939")\nServerModSetup("458940297")\nServerModSetup("466732225")
+ServerModSetup("666155465")\nServerModSetup("672208231")\nServerModSetup("721491336")\nServerModSetup("758532836")\nServerModSetup("770901818")\nServerModSetup("818739975")\nServerModSetup("972139614")" >> ~/DST_server/mods/dedicated_server_mods_setup.lua
 #===============================================================================================
 
 cd ~
