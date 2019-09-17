@@ -5,9 +5,9 @@
 
 ## Deploy SSH keygen
 
-  Key_Name=**\<choose_a_file_name\>**
+  Key_Name=**choose_a_file_name**
   
-  Host_ip=**\<server_ip\>**
+  Host_ip=**server_ip**
   
   cd ~/.ssh && ssh-keygen -t rsa -f $Key_Name
   
@@ -15,7 +15,7 @@
 
   ### Bad local keygen could be removed with
   
-  Host_ip=**\<server_ip_to_remove\>**
+  Host_ip=**server_ip_to_remove**
   
   usr_Name=$(whoami)
   
