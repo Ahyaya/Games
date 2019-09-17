@@ -15,6 +15,8 @@
 
   ### Bad local keygen could be removed with
   
+  Host_ip=**\<server_ip_to_remove\>**
+  
   usr_Name=$(whoami)
   
   ssh-keygen -f "/home/${usr_Name}/.ssh/known_hosts" -R ${Host_ip}
