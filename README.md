@@ -5,13 +5,13 @@
 
 ## Deploy SSH keygen
 
-  Key_Name=\<choose_a_file_name\>
+  Key_Name=**\<choose_a_file_name\>**
   
-  Host_ip=\<server_ip\>
+  Host_ip=**\<server_ip\>**
   
   cd ~/.ssh && ssh-keygen -t rsa -f $Key_Name
   
-  ssh-copy-id -i "${Key_Name}.pub"  "root@${Host_ip}"
+  ssh-copy-id -i "${Key_Name}.pub"  "**root**@${Host_ip}"
 
   ### Bad local keygen could be removed with
   
