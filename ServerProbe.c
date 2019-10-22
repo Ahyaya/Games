@@ -12,8 +12,10 @@
 
 int main(int argc, char *argv[])
 {
-    int sockfd, num, pf, newplayer=-1;
+    int sockfd, num, pf, nameLen=0, min=0, hr=0;
     unsigned char buf[2048],challenge[9],request[9];
+    float time_sec;
+    unsigned char *p_time = (unsigned char*)&time_sec;
     
     if(argc != 2)
     {
@@ -88,16 +90,20 @@ int main(int argc, char *argv[])
         break;
     }
     printf("Total Players: %d\n",buf[5]);
-    
-    for(pf=6;pf<num;)
+    pf=6;nameLen=0;
+    while(pf<num)
     {
-        if(buf[pf]==0x00){newplayer*=-1;pf++;continue;}
-        while(newplayer>0)
-        {
-            if(buf[pf]!=0x00){putchar(buf[pf]);}else{newplayer*=-1;printf("\t%d\t",buf[++pf]);pf+=3;printf("%02x%02x%02x%02x\n",buf[pf+4],buf[pf+3],buf[pf+2],buf[pf+1]);pf+=4;}
-            pf++;
-        }
-
+        if(buf[pf]==0x00) pf++;
+        while(buf[pf]!=0x00){putchar(buf[pf++]);nameLen++;}
+        if(nameLen==0) printf("Loading");
+        printf("\t%d\t",buf[++pf]);pf+=4;
+        p_time[0]=buf[pf];p_time[1]=buf[pf+1];p_time[2]=buf[pf+2];p_time[3]=buf[pf+3];
+        hr=time_sec/3600;min=(time_sec-hr*3600)/60;
+        if(hr) printf("%dh",hr);
+        if(min) printf("%dmin",min);
+        printf("%.0fs\n",time_sec-3600*hr-60*min);
+        pf+=4;
+        nameLen=0;
     }
     putchar('\n');
 
