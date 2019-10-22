@@ -56,22 +56,22 @@ int main(int argc, char *argv[])
             printf("recv() error.\n");
             exit(1);
         }
-        printf("Server challenge:\t");
+        /*printf("Server challenge:\t");
         for(pf=0;pf<num;pf++)
         {
             printf("%02x ",buf[pf]);
         }
-        putchar('\n');
+        putchar('\n');*/
         break;
     }
     for(pf=0;pf<4;pf++) request[pf]=0xFF;
     request[4]=0x55;//This parameter decide which session to consult.
     for(pf=5;pf<9;pf++) request[pf]=buf[pf];
-    printf("\nSending request:\t");
+    /*printf("\nSending request:\t");
     for(pf=0;pf<9;pf++)
     {
         printf("%02x ",request[pf]);
-    }
+    }*/
     send(sockfd, request, strlen(request), 0);
     putchar('\n');
     while(1)
@@ -81,11 +81,11 @@ int main(int argc, char *argv[])
             printf("recv() error.\n");
             exit(1);
         }
-        printf("\nServer reply:\n");
+        /*printf("\nServer reply:\n");
         for(pf=5;pf<num;pf++)
         {
             printf("%02x ",buf[pf]);
-        }
+        }*/
         putchar('\n');
         break;
     }
@@ -108,4 +108,5 @@ int main(int argc, char *argv[])
     putchar('\n');
 
     close(sockfd);
+return 0;
 }
