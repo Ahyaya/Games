@@ -100,7 +100,7 @@ int main(int argc, char *argv[])
         p_time[0]=buf[pf];p_time[1]=buf[pf+1];p_time[2]=buf[pf+2];p_time[3]=buf[pf+3];
         hr=time_sec/3600;min=(time_sec-hr*3600)/60;
         if(hr) printf("%dh",hr);
-        if(min) printf("%dmin",min);
+        if(min) printf("%dm",min);
         printf("%.0fs\n",time_sec-3600*hr-60*min);
         pf+=4;
         nameLen=0;
