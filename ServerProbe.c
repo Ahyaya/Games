@@ -12,7 +12,7 @@
 
 int main(int argc, char *argv[])
 {
-    int sockfd, num, pf;
+    int sockfd, num, pf, newplayer=-1;
     unsigned char buf[2048],challenge[9],request[9];
     
     if(argc != 2)
@@ -82,11 +82,24 @@ int main(int argc, char *argv[])
         printf("\nServer reply:\n");
         for(pf=5;pf<num;pf++)
         {
-            putchar(buf[pf]);
+            printf("%02x ",buf[pf]);
         }
         putchar('\n');
         break;
     }
+    printf("Total Players: %d\n",buf[5]);
+    
+    for(pf=6;pf<num;)
+    {
+        if(buf[pf]==0x00){newplayer*=-1;pf++;continue;}
+        while(newplayer>0)
+        {
+            if(buf[pf]!=0x00){putchar(buf[pf]);}else{newplayer*=-1;printf("\t%d\t",buf[++pf]);pf+=3;printf("%02x%02x%02x%02x\n",buf[pf+4],buf[pf+3],buf[pf+2],buf[pf+1]);pf+=4;}
+            pf++;
+        }
+
+    }
+    putchar('\n');
 
     close(sockfd);
 }
