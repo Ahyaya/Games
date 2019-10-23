@@ -7,6 +7,7 @@
 #include <netinet/in.h>
 #include <netdb.h>
 #include <arpa/inet.h>
+#include <sys/time.h>
 
 #define MAXDATASIZE 1400
 
@@ -20,7 +21,7 @@ int main(int argc, char *argv[])
     if(argc != 2)
     {
         printf("\nUsage: %s\033[31;1m IP_address:\033[32mPort \033[0m(port is optional, use 27015 by default)\n\n", argv[0]);
-        exit(1);
+        return -1;
     }
 
     //transfer arguments to declare ip,port and socket
@@ -35,41 +36,50 @@ int main(int argc, char *argv[])
     if((sockfd=socket(AF_INET, SOCK_DGRAM, 0)) == -1)
     {
         printf("socket() error\n");
-        exit(1);
+        return -1;
     }
     bzero(&server, sizeof(server));
     server.sin_family = AF_INET;
     server.sin_port = htons(PORT);
-
     server.sin_addr.s_addr = inet_addr(server_IP);
+
+    //set timeout limit to avoid stuck at recv() process
+    struct timeval timeout;
+    timeout.tv_sec = 3; timeout.tv_usec = 0;
+    if (setsockopt(sockfd, SOL_SOCKET, SO_RCVTIMEO, &timeout, sizeof(timeout)) == -1)
+    {
+        printf("setsockopt() error.\n");
+        return -1;
+    }
+
     if(connect(sockfd, (struct sockaddr *)&server, sizeof(server)) == -1)
     {
-        printf("connect() error.\n");
-        exit(1);
+        printf("Connection Failed.\n");
+        return -1;
     }
 
     //Send query request to Valve server
     for(pf=0;pf<9;pf++) request[pf]=0xFF;
-    request[4]=0x55;//This parameter decide which session to consult.
+    request[4]=0x55;
     send(sockfd, request, strlen(request), 0);
 
     //Receive challenge code from server
     if((num = recv(sockfd, buf, MAXDATASIZE, 0)) == -1)
     {
-        printf("recv() error.\n");
-        exit(1);
+        printf("Server Time Out.\n");
+        return -1;
     }
 
     //Reply the challenge
-    for(pf=0;pf<9;pf++) challenge[pf]=buf[pf];
+    for(pf=0;pf<num;pf++) challenge[pf]=buf[pf];
     challenge[4]=request[4];    
     send(sockfd, challenge, strlen(challenge), 0);
 
     //Receive Players info
     if((num = recv(sockfd, buf, MAXDATASIZE, 0)) == -1)
     {
-        printf("recv() error.\n");
-        exit(1);
+        printf("Server Time Out.\n");
+        return -1;
     }
     putchar('\n');
         
