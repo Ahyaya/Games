@@ -11,6 +11,28 @@
 
 #define MAXDATASIZE 1400
 
+int DNSquery(char* hostname)
+{
+	char  *ptr;
+	struct hostent *hostptr;
+
+	if ((hostptr = gethostbyname(hostname)) == NULL)
+	{
+		printf("DNS query failed.\n");
+		return -1;
+	}
+
+	if(hostptr->h_addrtype == AF_INET)
+	{
+		printf("Response from %s \n", inet_ntop(hostptr->h_addrtype, *(hostptr->h_addr_list), hostname, 64));
+
+	}else{
+		printf("DNS query failed.\n");
+        return -1;
+	}
+    return 0;
+}
+
 int main(int argc, char *argv[])
 {
     float time_sec;
@@ -41,7 +63,11 @@ int main(int argc, char *argv[])
     bzero(&server, sizeof(server));
     server.sin_family = AF_INET;
     server.sin_port = htons(PORT);
-    server.sin_addr.s_addr = inet_addr(server_IP);
+    if((server.sin_addr.s_addr = inet_addr(server_IP))==-1)
+    {
+        if(DNSquery(server_IP)==-1) return -1;
+        server.sin_addr.s_addr = inet_addr(server_IP);
+    }
 
     //set timeout limit to avoid stuck at recv() process
     struct timeval timeout;
