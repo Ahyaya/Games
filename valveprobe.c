@@ -37,7 +37,8 @@ int main(int argc, char *argv[])
 {
     float time_sec;
     int sockfd, num, pf, nameLen=0, min=0, hr=0;
-    unsigned char buf[2048],challenge[9],request[9],*p_time = (unsigned char*)&time_sec;
+    unsigned char buf[2048],challenge[9],player_request[9],*p_time = (unsigned char*)&time_sec;
+    unsigned char info_request[25]={0xFF,0xFF,0xFF,0xFF,0x54,0x53,0x6F,0x75,0x72,0x63,0x65,0x20,0x45,0x6E,0x67,0x69,0x6E,0x65,0x20,0x51,0x75,0x65,0x72,0x79,0x00};
     
     //argments check
     if(argc != 2)
@@ -84,27 +85,48 @@ int main(int argc, char *argv[])
         return -1;
     }
 
-    //Send query request to Valve server
-    for(pf=0;pf<9;pf++) request[pf]=0xFF;
-    request[4]=0x55;
-    send(sockfd, request, strlen(request), 0);
+    //Send info request to Valve server
+    send(sockfd, info_request, 25, 0);
+    if((num = recv(sockfd, buf, MAXDATASIZE, 0)) == -1)
+    {
+        printf("%s time out.\n",server_IP);
+        return -1;
+    }
+
+    //Print server basic info
+    for(pf=6;;)
+    {
+        while(buf[pf]!=0x00) putchar(buf[pf++]);
+        putchar('\t');pf++;
+        while(buf[pf]!=0x00) putchar(buf[pf++]);
+        putchar('\t');pf++;
+        while(buf[pf++]!=0x00);while(buf[pf++]!=0x00);
+        pf+=2;
+        printf("%d/%d\n",buf[pf],buf[pf+1]);
+        break;
+    }
+
+    //Send player request to Valve server
+    for(pf=0;pf<9;pf++) player_request[pf]=0xFF;
+    player_request[4]=0x55;
+    send(sockfd, player_request, 9, 0);
 
     //Receive challenge code from server
     if((num = recv(sockfd, buf, MAXDATASIZE, 0)) == -1)
     {
-        printf("Server Time Out.\n");
+        printf("%s time out.\n",server_IP);
         return -1;
     }
 
     //Reply the challenge
     for(pf=0;pf<num;pf++) challenge[pf]=buf[pf];
-    challenge[4]=request[4];    
-    send(sockfd, challenge, strlen(challenge), 0);
+    challenge[4]=player_request[4];    
+    send(sockfd, challenge, 9, 0);
 
     //Receive Players info
     if((num = recv(sockfd, buf, MAXDATASIZE, 0)) == -1)
     {
-        printf("Server Time Out.\n");
+        printf("%s time out.\n",server_IP);
         return -1;
     }
     putchar('\n');
