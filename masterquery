@@ -1,0 +1,6 @@
+#!/bin/bash
+for server_ip in `cat ~/.serverlist`
+do
+valveprobe $server_ip
+done
+
