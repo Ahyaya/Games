@@ -18,16 +18,15 @@ int DNSquery(char* hostname)
 
 	if ((hostptr = gethostbyname(hostname)) == NULL)
 	{
-		printf("DNS query failed.\n");
+		printf("DNS query failure: unable to solve %s\n",hostname);
 		return -1;
 	}
 
 	if(hostptr->h_addrtype == AF_INET)
 	{
-		printf("Response from %s \n", inet_ntop(hostptr->h_addrtype, *(hostptr->h_addr_list), hostname, 64));
-
+		inet_ntop(hostptr->h_addrtype, *(hostptr->h_addr_list), hostname, 64);
 	}else{
-		printf("DNS query failed.\n");
+		puts("DNS query failure: unknown address type\n");
         return -1;
 	}
     return 0;
@@ -58,7 +57,7 @@ int main(int argc, char *argv[])
     //define protocol as UPD and initiate the socket
     if((sockfd=socket(AF_INET, SOCK_DGRAM, 0)) == -1)
     {
-        printf("socket() error\n");
+        puts("socket() error\n");
         return -1;
     }
     bzero(&server, sizeof(server));
@@ -75,13 +74,13 @@ int main(int argc, char *argv[])
     timeout.tv_sec = 3; timeout.tv_usec = 0;
     if (setsockopt(sockfd, SOL_SOCKET, SO_RCVTIMEO, &timeout, sizeof(timeout)) == -1)
     {
-        printf("setsockopt() error.\n");
+        puts("setsockopt() error.\n");
         return -1;
     }
 
     if(connect(sockfd, (struct sockaddr *)&server, sizeof(server)) == -1)
     {
-        printf("Connection Failed.\n");
+        puts("Connection Failed.\n");
         return -1;
     }
 
@@ -102,7 +101,7 @@ int main(int argc, char *argv[])
         putchar('\t');pf++;
         while(buf[pf++]!=0x00);while(buf[pf++]!=0x00);
         pf+=2;
-        printf("%d/%d\n",buf[pf],buf[pf+1]);
+        printf("%d/%d\t%s:%d\n",buf[pf],buf[pf+1],server_IP,PORT);
         break;
     }
 
@@ -129,31 +128,34 @@ int main(int argc, char *argv[])
         printf("%s time out.\n",server_IP);
         return -1;
     }
-    putchar('\n');
+    //putchar('\n');
         
     //Decode the bytes and print
-    printf("Total Players: %d\n",buf[5]);
-    pf=6;nameLen=0;
-    while(pf<num)
+    //printf("Total Players: %d\n",buf[5]);
+    if(buf[5]>0x00)
     {
-        if(buf[pf]==0x00) pf++;
-        //Print player name
-        while(buf[pf]!=0x00)
+        pf=6;nameLen=0;
+        while(pf<num)
         {
-            putchar(buf[pf++]);
-            nameLen++;
+            if(buf[pf]==0x00) pf++;
+            //Print player name
+            while(buf[pf]!=0x00)
+            {
+                putchar(buf[pf++]);
+                nameLen++;
+            }
+            if(nameLen==0) printf("Loading");
+            //Print score
+            printf("\t%d\t",buf[++pf]);pf+=4;
+            //Print time as float
+            p_time[0]=buf[pf];p_time[1]=buf[pf+1];p_time[2]=buf[pf+2];p_time[3]=buf[pf+3];
+            hr=time_sec/3600;min=(time_sec-hr*3600)/60;
+            if(hr) printf("%dh",hr);
+            if(min) printf("%dm",min);
+            printf("%.0fs\n",time_sec-3600*hr-60*min);pf+=4;nameLen=0;
         }
-        if(nameLen==0) printf("Loading");
-        //Print score
-        printf("\t%d\t",buf[++pf]);pf+=4;
-        //Print time as float
-        p_time[0]=buf[pf];p_time[1]=buf[pf+1];p_time[2]=buf[pf+2];p_time[3]=buf[pf+3];
-        hr=time_sec/3600;min=(time_sec-hr*3600)/60;
-        if(hr) printf("%dh",hr);
-        if(min) printf("%dm",min);
-        printf("%.0fs\n",time_sec-3600*hr-60*min);pf+=4;nameLen=0;
+        putchar('\n');
     }
-    putchar('\n');
 
     close(sockfd);
 return 0;
