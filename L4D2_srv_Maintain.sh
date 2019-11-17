@@ -7,7 +7,7 @@
 #execute L4DServ process
 
 cd ~/Steam/steamapps/common/Left\ 4\ Dead\ 2\ Dedicated\ Server/
-screen -dmS 'L4D2' bash -c './srcds_run -game left4dead2 -secure +hostport 27015 -condebug +exec server.cfg'
+screen -dmS 'L4D2' bash -c './srcds_run -game left4dead2 +map c2m1_highway +hostport 27015 -condebug -tickrate 60 -insecure'
 
 echo "L4D2 server reboot..."
 echo "=============================================================="
