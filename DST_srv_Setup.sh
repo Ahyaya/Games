@@ -5,7 +5,7 @@
 sudo apt-get install libstdc++6:i386 libgcc1:i386 libcurl4-gnutls-dev:i386
 #-----------------------------------------------------------------------------------------------
 #CentOS
-#yum -y install glibc.1686 libstdc++.i686 libcurl.i686 --setopt=protected_multilib=false
+#yum -y install glibc.i686 libstdc++.i686 libcurl.i686 --setopt=protected_multilib=false
 #ln -s /usr/lib/libcurl.so.4 /usr/lib/libcurl-gnutls.so.4
 #===============================================================================================
 
