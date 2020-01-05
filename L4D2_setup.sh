@@ -16,3 +16,5 @@ wget https://steamcdn-a.akamaihd.net/client/installer/steamcmd_linux.tar.gz
 tar -xvzf steamcmd_linux.tar.gz
 
 ./steamcmd.sh +login anonymous +app_update 222860 +quit
+
+echo "app 222860 installation may fail, please validate"
