@@ -20,4 +20,5 @@
 ## ffmpeg rectangular filter & disable audio
 
   ffmpeg -i Racht.mp4 -filter:v "crop=100:80:123:456" -an Racht_out.mp4
+  
   Rectangular starts from x=123, y=456 with width 100, height 80; -an will disable audio
