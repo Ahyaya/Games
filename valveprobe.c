@@ -37,7 +37,7 @@ int main(int argc, char *argv[])
     float time_sec;
     int sockfd, num, pf, nameLen=0, min=0, hr=0;
     unsigned char buf[2048],challenge[9],player_request[9],*p_time = (unsigned char*)&time_sec;
-    unsigned char info_request[25]={0xFF,0xFF,0xFF,0xFF,0x54,0x53,0x6F,0x75,0x72,0x63,0x65,0x20,0x45,0x6E,0x67,0x69,0x6E,0x65,0x20,0x51,0x75,0x65,0x72,0x79,0x00};
+    unsigned char info_request[29]={0xFF,0xFF,0xFF,0xFF,0x54,0x53,0x6F,0x75,0x72,0x63,0x65,0x20,0x45,0x6E,0x67,0x69,0x6E,0x65,0x20,0x51,0x75,0x65,0x72,0x79,0x00,0xff,0xff,0xff,0xff};
     
     //argments check
     if(argc != 2)
@@ -85,11 +85,23 @@ int main(int argc, char *argv[])
     }
 
     //Send info request to Valve server
-    send(sockfd, info_request, 25, 0);
+    send(sockfd, info_request, 29, 0);
     if((num = recv(sockfd, buf, MAXDATASIZE, 0)) == -1)
     {
         printf("%s time out.\n",server_IP);
         return -1;
+    }
+
+    //in the case of server return a challeng number
+    if(buf[4] & 0x41){
+	info_request[25]=buf[5];info_request[26]=buf[6];info_request[27]=buf[7];info_request[28]=buf[8];
+	send(sockfd, info_request, 29, 0);
+	
+	if((num = recv(sockfd, buf, MAXDATASIZE, 0)) == -1)
+    	{
+		printf("%s time out.\n",server_IP);
+		return -1;
+	}
     }
 
     //Print server basic info
